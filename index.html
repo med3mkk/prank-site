@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خدعة جنونية مخيفة</title>
+    <style>
+        body {
+            font-family: "Courier New", monospace;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000;
+            color: white;
+        }
+
+        #content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+            font-weight: bold;
+            color: red;
+            z-index: 999;
+            animation: shake 0.5s infinite alternate;
+            text-shadow: 0 0 30px red, 0 0 10px darkred;
+        }
+
+        #inputContainer {
+            display: none;
+            margin-top: 20px;
+        }
+
+        #message {
+            font-size: 20px;
+            font-weight: bold;
+            color: red;
+        }
+
+        #inputField {
+            font-size: 18px;
+            padding: 10px;
+            margin-top: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+        }
+
+        /* تأثير تكبير الشاشة */
+        @keyframes zoomIn {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.5); }
+        }
+
+        .zoomed {
+            animation: zoomIn 0.3s forwards;
+        }
+
+        /* تأثير تجميد الشاشة */
+        .frozen {
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* تأثير الظلال */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 998;
+            opacity: 0.8;
+        }
+
+        /* تأثير الهز */
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(5px); }
+        }
+
+        /* تأثير الفوضى مع النصوص */
+        @keyframes chaos {
+            0% { top: 50%; left: 50%; opacity: 1; font-size: 30px; }
+            25% { top: 10%; left: 60%; opacity: 0.8; font-size: 35px; }
+            50% { top: 80%; left: 10%; opacity: 0.6; font-size: 40px; }
+            75% { top: 20%; left: 20%; opacity: 0.4; font-size: 45px; }
+            100% { top: 50%; left: 50%; opacity: 1; font-size: 50px; }
+        }
+
+        .chaoticText {
+            animation: chaos 2s infinite;
+            position: absolute;
+            color: green;
+            font-family: "Courier New", monospace;
+            z-index: 1000;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="overlay" class="overlay"></div>
+<div id="content">الشاشة تجمدت... اضغط "ميد عمك" لإلغاء التجميد!</div>
+
+<div id="inputContainer">
+    <p id="message">أدخل "محمد عمي" لإيقاف التجميد:</p>
+    <input type="text" id="inputField" placeholder="اكتب هنا" />
+</div>
+
+<audio id="screamSound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+<audio id="disturbSound" src="https://www.soundjay.com/button/beep-06.wav" preload="auto"></audio>
+
+<script>
+    let isFrozen = true;
+    let messages = [
+        "محمد عمي!!",
+        "محمد عمي وعمك!!!",
+        "الشاشة مش تبعك! يجب أن تكتب \"محمد عمي\"!!!",
+        "أنت في خطر! محمد عمي موجود!",
+        "عملية فاشلة! يجب أن تكتب الآن!!!"
+    ];
+
+    // تشغيل الأصوات
+    function playSound(id) {
+        let sound = document.getElementById(id);
+        sound.play();
+    }
+
+    // تكبير الشاشة بشكل سريع
+    setTimeout(() => {
+        document.body.classList.add('zoomed');
+        document.body.classList.add('frozen');
+        playSound("screamSound"); // تشغيل الصوت عند التجميد
+    }, 1000); // تأثير تكبير بعد ثانية واحدة
+
+    // إظهار الرسائل الجنونية بشكل عشوائي
+    setInterval(() => {
+        let message = messages[Math.floor(Math.random() * messages.length)];
+        let chaoticMessage = document.createElement("div");
+        chaoticMessage.classList.add("chaoticText");
+        chaoticMessage.innerText = message;
+        document.body.appendChild(chaoticMessage);
+        playSound("disturbSound"); // تشغيل الصوت عند ظهور الرسالة
+    }, 1500); // تظهر رسالة جديدة كل 1.5 ثانية
+
+    // إظهار الحقل النصي بعد التجميد
+    setTimeout(() => {
+        document.getElementById("inputContainer").style.display = "block";
+    }, 3000); // تأخير صغير قبل أن يظهر الحقل
+
+    // التحقق من المدخلات
+    document.getElementById("inputField").addEventListener("input", function(e) {
+        if (e.target.value === "محمد عمي") {
+            document.body.innerHTML = '<h1>تم إيقاف التجميد! مرحبا بك من جديد!</h1>';
+        }
+    });
+</script>
+
+</body>
+</html>
